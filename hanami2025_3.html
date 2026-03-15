@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>花見会のお知らせ 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --sakura-pale: #fff0f3;
+    --sakura-light: #ffd6e0;
+    --sakura-mid: #ffb3c6;
+    --sakura-deep: #e8789a;
+    --sakura-bold: #c45c7a;
+    --sakura-ink: #3d1a26;
+    --cream: #fffaf0;
+  }
+
+  @keyframes petalFall {
+    0% { transform: translateY(-20px) rotate(0deg) translateX(0); opacity: 0; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.6; }
+    100% { transform: translateY(900px) rotate(720deg) translateX(60px); opacity: 0; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  body {
+    background: var(--sakura-pale);
+    font-family: 'Noto Sans JP', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .petal {
+    position: fixed;
+    width: 12px;
+    height: 10px;
+    background: radial-gradient(ellipse at 40% 30%, #ffccd5, #ffaabb);
+    border-radius: 50% 0 50% 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+  }
+
+  .flyer {
+    position: relative;
+    max-width: 680px;
+    margin: 0 auto;
+    background: var(--cream);
+    min-height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 0 0 60px rgba(200, 90, 120, 0.15);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    background: linear-gradient(160deg, #fff0f5 0%, #ffd6e3 40%, #f9b8cc 70%, #e8789a 100%);
+    padding: 50px 40px 60px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(255,180,200,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .cherry-branch {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 80px;
+    opacity: 0.25;
+    background-image:
+      radial-gradient(circle 6px at 10% 70%, #d4607a 0%, transparent 60%),
+      radial-gradient(circle 5px at 15% 55%, #e8789a 0%, transparent 60%),
+      radial-gradient(circle 7px at 23% 75%, #c45c7a 0%, transparent 60%),
+      radial-gradient(circle 5px at 32% 60%, #e8789a 0%, transparent 60%),
+      radial-gradient(circle 8px at 40% 80%, #d4607a 0%, transparent 60%),
+      radial-gradient(circle 5px at 48% 65%, #e8789a 0%, transparent 60%),
+      radial-gradient(circle 6px at 56% 75%, #c45c7a 0%, transparent 60%),
+      radial-gradient(circle 7px at 65% 60%, #e8789a 0%, transparent 60%),
+      radial-gradient(circle 5px at 73% 80%, #d4607a 0%, transparent 60%),
+      radial-gradient(circle 8px at 82% 65%, #c45c7a 0%, transparent 60%),
+      radial-gradient(circle 5px at 90% 75%, #e8789a 0%, transparent 60%);
+  }
+
+  .year-badge {
+    display: inline-block;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    color: var(--sakura-bold);
+    background: rgba(255,255,255,0.6);
+    padding: 5px 20px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .catch {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    color: var(--sakura-bold);
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .main-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 58px;
+    font-weight: 700;
+    color: var(--sakura-ink);
+    line-height: 1.1;
+    letter-spacing: 0.05em;
+    position: relative;
+    z-index: 1;
+    text-shadow: 2px 4px 20px rgba(200, 90, 120, 0.2);
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+
+  .subtitle {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0.4em;
+    color: var(--sakura-bold);
+    margin-top: 12px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+
+  .sakura-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 24px 0;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .sakura-divider::before,
+  .sakura-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(196, 92, 122, 0.5));
+  }
+
+  .sakura-divider::after {
+    background: linear-gradient(to left, transparent, rgba(196, 92, 122, 0.5));
+  }
+
+  .sakura-icon {
+    font-size: 22px;
+    animation: shimmer 2s ease infinite;
+  }
+
+  /* ── INFO CARDS ── */
+  .info-section {
+    padding: 40px 36px;
+    background: white;
+    position: relative;
+  }
+
+  .info-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(to right, var(--sakura-mid), var(--sakura-deep), var(--sakura-bold), var(--sakura-deep), var(--sakura-mid));
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .info-card {
+    background: var(--sakura-pale);
+    border-radius: 16px;
+    padding: 20px 18px;
+    border: 1.5px solid var(--sakura-light);
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .info-card::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 60px; height: 60px;
+    background: radial-gradient(circle, rgba(232,120,154,0.1) 0%, transparent 70%);
+    border-radius: 0 16px 0 60px;
+  }
+
+  .card-icon {
+    font-size: 22px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .card-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    color: var(--sakura-bold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .card-value {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--sakura-ink);
+    line-height: 1.4;
+  }
+
+  .card-note {
+    font-size: 12px;
+    color: #888;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  .card-note strong { color: var(--sakura-bold); }
+
+  /* ── RULES ── */
+  .rules-section {
+    padding: 32px 36px;
+    background: linear-gradient(135deg, #fff8fb 0%, #fff0f5 100%);
+  }
+
+  .section-heading {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    color: var(--sakura-bold);
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-heading::before, .section-heading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--sakura-light);
+  }
+
+  .rule-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .rule-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: white;
+    border-radius: 12px;
+    padding: 14px 18px;
+    border-left: 3px solid var(--sakura-mid);
+    font-size: 14px;
+    color: #444;
+    line-height: 1.6;
+  }
+
+  .rule-emoji {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── SNS ── */
+  .sns-section {
+    padding: 28px 36px;
+    background: white;
+  }
+
+  .sns-box {
+    background: linear-gradient(135deg, #fff0f5, #ffd6e3);
+    border-radius: 16px;
+    padding: 22px 24px;
+    border: 1.5px solid var(--sakura-light);
+  }
+
+  .sns-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--sakura-bold);
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .sns-row {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ── クリック可能SNSボタン ── */
+  .sns-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border-radius: 24px;
+    padding: 12px 22px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--sakura-ink);
+    box-shadow: 0 2px 12px rgba(200, 90, 120, 0.13);
+    border: 1.5px solid var(--sakura-light);
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+  }
+
+  .sns-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(200, 90, 120, 0.25);
+    background: var(--sakura-pale);
+    border-color: var(--sakura-deep);
+  }
+
+  .sns-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(200, 90, 120, 0.18);
+  }
+
+  .sns-btn-icon {
+    font-size: 22px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .sns-btn-text .sns-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--sakura-bold);
+  }
+
+  .sns-btn-text .sns-handle {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--sakura-ink);
+  }
+
+  .sns-note {
+    font-size: 12px;
+    color: #888;
+    text-align: center;
+    margin-top: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── QR / MAP ── */
+  .map-section {
+    padding: 28px 36px 40px;
+    background: var(--sakura-pale);
+    text-align: center;
+  }
+
+  .map-inner {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .qr-wrap {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 4px 20px rgba(200, 90, 120, 0.1);
+    border: 1.5px solid var(--sakura-light);
+    flex-shrink: 0;
+    text-align: center;
+  }
+
+  #qrcode canvas, #qrcode img {
+    border-radius: 8px;
+    display: block;
+  }
+
+  .qr-caption {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 8px;
+    letter-spacing: 0.1em;
+  }
+
+  .map-text {
+    text-align: left;
+    flex: 1;
+  }
+
+  .map-text h3 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--sakura-ink);
+    margin-bottom: 10px;
+  }
+
+  .map-text p {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.7;
+  }
+
+  .map-url {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Noto Sans JP', sans-serif;
+    color: white;
+    background: linear-gradient(135deg, var(--sakura-deep), var(--sakura-bold));
+    margin-top: 12px;
+    padding: 12px 22px;
+    border-radius: 28px;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(196, 92, 122, 0.35);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+    letter-spacing: 0.05em;
+  }
+
+  .map-url:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(196, 92, 122, 0.45);
+    filter: brightness(1.08);
+  }
+
+  .map-url:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(196, 92, 122, 0.3);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--sakura-ink);
+    padding: 28px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--sakura-mid), var(--sakura-deep), var(--sakura-bold));
+  }
+
+  .footer-msg {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+  }
+
+  .footer-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.2em;
+  }
+
+  .footer-sakura {
+    font-size: 24px;
+    margin-bottom: 12px;
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<div id="petals"></div>
+
+<div class="flyer">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="cherry-branch"></div>
+    <div class="year-badge">2025 SPRING</div>
+    <div class="catch">〜 もうすぐ春だよ！みんな集合！ 〜</div>
+    <h1 class="main-title">花見会</h1>
+    <div class="subtitle">お知らせ　／　Hanami Invitation</div>
+    <div class="sakura-divider">
+      <span class="sakura-icon">🌸</span>
+    </div>
+  </div>
+
+  <!-- INFO CARDS -->
+  <div class="info-section">
+    <div class="info-grid">
+
+      <div class="info-card" style="animation-delay:0.1s">
+        <span class="card-icon">📅</span>
+        <div class="card-label">日程 / DATE</div>
+        <div class="card-value">3月28日（土）</div>
+        <div class="card-note">雨天順延 → <strong>翌29日（日）</strong><br>開催・延期・中止はSNSでお知らせ</div>
+      </div>
+
+      <div class="info-card" style="animation-delay:0.2s">
+        <span class="card-icon">⏰</span>
+        <div class="card-label">時間 / TIME</div>
+        <div class="card-value">10:00 〜 16:00</div>
+        <div class="card-note">出入り自由！<br>好きな時間に来てね</div>
+      </div>
+
+      <div class="info-card" style="animation-delay:0.3s">
+        <span class="card-icon">📍</span>
+        <div class="card-label">会場 / PLACE</div>
+        <div class="card-value">井の頭公園</div>
+        <div class="card-note">ブルースカイコーヒー前<br>（詳細はQRコード参照）</div>
+      </div>
+
+      <div class="info-card" style="animation-delay:0.4s">
+        <span class="card-icon">💴</span>
+        <div class="card-label">会費 / FEE</div>
+        <div class="card-value">な　し</div>
+        <div class="card-note">飲食物は各自持参<br>シートがある方は大歓迎！</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RULES -->
+  <div class="rules-section">
+    <div class="section-heading">🌸　ご参加にあたって　🌸</div>
+    <ul class="rule-list">
+      <li class="rule-item">
+        <span class="rule-emoji">🕘</span>
+        <span>島田は <strong>9時から場所取り</strong> のため会場入りしています。迷ったらSNSでご連絡を！</span>
+      </li>
+      <li class="rule-item">
+        <span class="rule-emoji">🍱</span>
+        <span>飲食物は <strong>各自が食べる・飲む分を持参</strong> するスタイルです。シェアも大歓迎！</span>
+      </li>
+      <li class="rule-item">
+        <span class="rule-emoji">🧺</span>
+        <span>レジャーシートをお持ちの方はぜひ！なくても気軽にどうぞ。</span>
+      </li>
+      <li class="rule-item">
+        <span class="rule-emoji">👫</span>
+        <span>5〜10名くらいの気軽な会です。お友達を連れてきても大歓迎！初めての方もお気軽に。</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- SNS -->
+  <div class="sns-section">
+    <div class="sns-box">
+      <div class="sns-title">📣　天候による中止・延期のお知らせ</div>
+      <div class="sns-row">
+
+        <a class="sns-btn"
+           href="https://www.instagram.com/ichiro_shimada"
+           target="_blank"
+           rel="noopener noreferrer">
+          <span class="sns-btn-icon">📸</span>
+          <div class="sns-btn-text">
+            <span class="sns-label">INSTAGRAM</span>
+            <span class="sns-handle">ichiro_shimada</span>
+          </div>
+        </a>
+
+        <a class="sns-btn"
+           href="https://x.com/shimada_160"
+           target="_blank"
+           rel="noopener noreferrer">
+          <span class="sns-btn-icon" style="font-weight:900; font-family:serif; font-size:20px;">𝕏</span>
+          <div class="sns-btn-text">
+            <span class="sns-label">X (Twitter)</span>
+            <span class="sns-handle">@shimada_160</span>
+          </div>
+        </a>
+
+      </div>
+      <div class="sns-note">参加の意向を表明いただいた方には一斉メールでもお知らせします</div>
+    </div>
+  </div>
+
+  <!-- MAP / QR -->
+  <div class="map-section">
+    <div class="section-heading">🗺　アクセス・詳細</div>
+    <div class="map-inner">
+      <div class="qr-wrap">
+        <div id="qrcode"></div>
+        <div class="qr-caption">Google Map</div>
+      </div>
+      <div class="map-text">
+        <h3>井の頭公園<br>ブルースカイコーヒー前</h3>
+        <p>吉祥寺駅・井の頭公園駅から徒歩圏内。公園内のブルースカイコーヒーを目印にお越しください。</p>
+        <a class="map-url"
+           href="https://maps.app.goo.gl/1wGtKFAgWKVoS9pM6"
+           target="_blank"
+           rel="noopener noreferrer">
+          🗺　Google Mapで開く
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span class="footer-sakura">🌸</span>
+    <div class="footer-msg">のどかな春の一日を、一緒に過ごしましょう！</div>
+    <div class="footer-sub">2025 春 · 井の頭公園 · 花見会</div>
+  </div>
+
+</div>
+
+<script>
+  new QRCode(document.getElementById("qrcode"), {
+    text: "https://maps.app.goo.gl/1wGtKFAgWKVoS9pM6",
+    width: 110,
+    height: 110,
+    colorDark: "#3d1a26",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
+  });
+
+  function createPetal() {
+    const petal = document.createElement('div');
+    petal.className = 'petal';
+    petal.style.left = Math.random() * 100 + 'vw';
+    petal.style.top = '-20px';
+    const duration = 4 + Math.random() * 4;
+    const delay = Math.random() * 3;
+    petal.style.animation = `petalFall ${duration}s ${delay}s linear forwards`;
+    petal.style.transform = `rotate(${Math.random() * 360}deg)`;
+    document.getElementById('petals').appendChild(petal);
+    setTimeout(() => petal.remove(), (duration + delay) * 1000);
+  }
+
+  setInterval(createPetal, 400);
+  for (let i = 0; i < 5; i++) createPetal();
+</script>
+
+</body>
+</html>
